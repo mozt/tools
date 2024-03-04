@@ -15,8 +15,6 @@ with open('etcd-changes.txt', 'rb') as f:
             marker = False
         elif l == bytes([0x50, 0x55, 0x54, 0x0D, 0x0A]):
             if key:
-                # if key in res:
-                #     size += res[key]
                 res[key] = res[key] + size if key in res else size
                 key = ''
             marker = True
