@@ -8,10 +8,8 @@ with open('etcd-changes.txt', 'rb') as f:
     marker = False
     for l in lines:
         if marker:
-            key_long = l.decode('utf-8').strip()
-            key_long = key_long.split('/', 4)
-            key = '/'.join(key_long[:-1]
-                           ) if len(key_long) > 4 else '/'.join(key_long)
+            long = l.decode('utf-8').strip().split('/', 4)
+            key = '/'.join(long[:-1]) if len(long) > 4 else '/'.join(long)
             marker = False
         elif l == bytes([0x50, 0x55, 0x54, 0x0D, 0x0A]):
             if key:
@@ -21,6 +19,5 @@ with open('etcd-changes.txt', 'rb') as f:
             size = 0
         else:
             size += len(l)
-
 
 print(json.dumps(res))
